@@ -1,67 +1,59 @@
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cricket News AI</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #eef2f5;
-  margin: 0;
-  padding: 20px;
-  text-align: center;
-}
-.container {
-  max-width: 600px;
-  margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-}
-h1 { color: #087b43; }
-textarea {
-  width: 95%;
-  height: 130px;
-  padding: 10px;
-  font-size: 16px;
-}
-button {
-  background: #087b43;
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  margin: 10px;
-  border-radius: 7px;
-  font-size: 17px;
-}
-.post {
-  background: #f1f1f1;
-  padding: 12px;
-  margin-top: 15px;
-  border-radius: 8px;
-  text-align: left;
-}
+body{font-family:Arial;background:#101827;color:white;padding:20px}
+.container{max-width:650px;margin:auto}
+h1{color:#35d07f;text-align:center}
+textarea,select,button{width:100%;padding:14px;margin:10px 0;border-radius:8px;box-sizing:border-box}
+textarea{height:120px}
+button{background:#16a765;color:white;border:0;font-size:17px}
+#result{white-space:pre-wrap;background:#202d40;padding:15px;border-radius:8px}
 </style>
 </head>
 <body>
 <div class="container">
 <h1>🏏 Cricket News AI</h1>
-<p>Apni cricket news likhein</p>
-<textarea id="news" placeholder="Cricket news yahan likhein..."></textarea>
-<br>
-<button onclick="makePost()">Create Post</button>
+<p>Create cricket content in Urdu or English</p>
+
+<textarea id="topic" placeholder="Enter cricket news topic..."></textarea>
+
+<select id="language">
+<option value="Urdu">Urdu</option>
+<option value="English">English</option>
+</select>
+
+<button onclick="createPost()">Create Post</button>
 <div id="result"></div>
 </div>
+
 <script>
-function makePost() {
-  let news = document.getElementById("news").value;
-  if(news.trim() === "") {
-    alert("Please write cricket news first!");
-    return;
-  }
-  document.getElementById("result").innerHTML =
-    '<div class="post">' + news + '</div>';
+async function createPost(){
+const topic=document.getElementById("topic").value.trim();
+const language=document.getElementById("language").value;
+const result=document.getElementById("result");
+
+if(!topic){result.innerText="Please enter a cricket topic.";return;}
+
+result.innerText="Creating cricket content... Please wait.";
+
+try{
+const response=await fetch("https://cricket-news-ai-2026.mustafakhanabcd69.workers.dev",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({topic,language})
+});
+
+const data=await response.json();
+if(!response.ok) throw new Error(data.error || "Something went wrong");
+
+result.innerText=data.result;
+}catch(error){
+result.innerText="Error: "+error.message;
+}
 }
 </script>
 </body>
