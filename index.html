@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cricket News AI</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #eef2f5;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+h1 { color: #087b43; }
+textarea {
+  width: 95%;
+  height: 130px;
+  padding: 10px;
+  font-size: 16px;
+}
+button {
+  background: #087b43;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  margin: 10px;
+  border-radius: 7px;
+  font-size: 17px;
+}
+.post {
+  background: #f1f1f1;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 8px;
+  text-align: left;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🏏 Cricket News AI</h1>
+<p>Apni cricket news likhein</p>
+<textarea id="news" placeholder="Cricket news yahan likhein..."></textarea>
+<br>
+<button onclick="makePost()">Create Post</button>
+<div id="result"></div>
+</div>
+<script>
+function makePost() {
+  let news = document.getElementById("news").value;
+  if(news.trim() === "") {
+    alert("Please write cricket news first!");
+    return;
+  }
+  document.getElementById("result").innerHTML =
+    '<div class="post">' + news + '</div>';
+}
+</script>
+</body>
+</html>
